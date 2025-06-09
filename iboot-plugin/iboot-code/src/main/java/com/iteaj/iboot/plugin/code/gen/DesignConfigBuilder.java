@@ -525,7 +525,7 @@ public class DesignConfigBuilder {
             Boolean isExport = anExport.asBoolean(false);
 
             if(isImport || isExport) {
-                StringBuilder excel = new StringBuilder("@Excel(name=").append('"').append(title).append('"');
+                StringBuilder excel = new StringBuilder("//@Excel(name=").append('"').append(title).append('"');
                 if(isImport) {
                     excel.append(", isImportField=\"true\"");
                 }
