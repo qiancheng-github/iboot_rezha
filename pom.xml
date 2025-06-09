@@ -22,7 +22,9 @@
         <module>iboot-plugin</module>
         <!--依赖的第三方开源项目-->
         <module>iboot-tos</module>
-        <!--依赖的第三方开源项目-->
+        <!--rezha-->
+        <module>ruoyi-common</module>
+        <!--rezha-->
         <module>ruoyi-rezha</module>
 
 
@@ -54,6 +56,8 @@
         <maven.compiler.target>8</maven.compiler.target>
 
         <pagehelper.boot.version>1.4.7</pagehelper.boot.version>
+        <fastjson.version>2.0.43</fastjson.version>
+        <bitwalker.version>1.21</bitwalker.version>
     </properties>
 
     <scm>
@@ -81,11 +85,25 @@
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
+        <!-- 解析客户端操作系统、浏览器等 -->
+        <dependency>
+            <groupId>eu.bitwalker</groupId>
+            <artifactId>UserAgentUtils</artifactId>
+            <version>${bitwalker.version}</version>
+        </dependency>
+
         <!-- pagehelper 分页插件 -->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>${pagehelper.boot.version}</version>
+        </dependency>
+
+        <!-- 阿里JSON解析器 -->
+        <dependency>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
+            <version>${fastjson.version}</version>
         </dependency>
 
         <!--其他全局类库-->
