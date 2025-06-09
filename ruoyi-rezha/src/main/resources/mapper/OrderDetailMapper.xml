@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iteaj.business.mapper.OrderDetailMapper">
+    
+    <resultMap type="OrderDetail" id="OrderDetailResult">
+        <result property="id"    column="id"    />
+        <result property="orderCode"    column="order_code"    />
+        <result property="totalQuantity"    column="total_quantity"    />
+        <result property="productionDay"    column="production_day"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="isScrap"    column="is_scrap"    />
+        <result property="billetCode"    column="billet_code"    />
+        <result property="spareField1"    column="spare_field1"    />
+        <result property="spareField2"    column="spare_field2"    />
+    </resultMap>
+
+    <sql id="selectOrderDetailVo">
+        select id, order_code, total_quantity, production_day, del_flag, create_by, create_time, update_by, update_time, remark, is_scrap, billet_code, spare_field1, spare_field2 from order_detail
+    </sql>
+
+    <select id="selectOrderDetailList" parameterType="OrderDetail" resultMap="OrderDetailResult">
+        <include refid="selectOrderDetailVo"/>
+        <where>  
+            <if test="orderCode != null  and orderCode != ''"> and order_code = #{orderCode}</if>
+            <if test="totalQuantity != null "> and total_quantity = #{totalQuantity}</if>
+            <if test="productionDay != null "> and production_day = #{productionDay}</if>
+            <if test="isScrap != null  and isScrap != ''"> and is_scrap = #{isScrap}</if>
+            <if test="billetCode != null  and billetCode != ''"> and billet_code = #{billetCode}</if>
+            <if test="spareField1 != null  and spareField1 != ''"> and spare_field1 = #{spareField1}</if>
+            <if test="spareField2 != null  and spareField2 != ''"> and spare_field2 = #{spareField2}</if>
+        </where>
+    </select>
+    
+    <select id="selectOrderDetailById" parameterType="Long" resultMap="OrderDetailResult">
+        <include refid="selectOrderDetailVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertOrderDetail" parameterType="OrderDetail" useGeneratedKeys="true" keyProperty="id">
+        insert into order_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderCode != null">order_code,</if>
+            <if test="totalQuantity != null">total_quantity,</if>
+            <if test="productionDay != null">production_day,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="isScrap != null and isScrap != ''">is_scrap,</if>
+            <if test="billetCode != null">billet_code,</if>
+            <if test="spareField1 != null">spare_field1,</if>
+            <if test="spareField2 != null">spare_field2,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderCode != null">#{orderCode},</if>
+            <if test="totalQuantity != null">#{totalQuantity},</if>
+            <if test="productionDay != null">#{productionDay},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="isScrap != null and isScrap != ''">#{isScrap},</if>
+            <if test="billetCode != null">#{billetCode},</if>
+            <if test="spareField1 != null">#{spareField1},</if>
+            <if test="spareField2 != null">#{spareField2},</if>
+         </trim>
+    </insert>
+
+    <update id="updateOrderDetail" parameterType="OrderDetail">
+        update order_detail
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderCode != null">order_code = #{orderCode},</if>
+            <if test="totalQuantity != null">total_quantity = #{totalQuantity},</if>
+            <if test="productionDay != null">production_day = #{productionDay},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="isScrap != null and isScrap != ''">is_scrap = #{isScrap},</if>
+            <if test="billetCode != null">billet_code = #{billetCode},</if>
+            <if test="spareField1 != null">spare_field1 = #{spareField1},</if>
+            <if test="spareField2 != null">spare_field2 = #{spareField2},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOrderDetailById" parameterType="Long">
+        delete from order_detail where id = #{id}
+    </delete>
+
+    <delete id="deleteOrderDetailByIds" parameterType="String">
+        delete from order_detail where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

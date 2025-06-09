@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iteaj.business.mapper.MonitoringEnvMapper">
+    
+    <resultMap type="MonitoringEnv" id="MonitoringEnvResult">
+        <result property="id"    column="id"    />
+        <result property="companyId"    column="company_id"    />
+        <result property="monitorTime"    column="monitor_time"    />
+        <result property="location"    column="location"    />
+        <result property="temperature"    column="temperature"    />
+        <result property="humidity"    column="humidity"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectMonitoringEnvVo">
+        select id, company_id, monitor_time, location, temperature, humidity, del_flag, create_by, create_time, update_by, update_time, remark from monitoring_env
+    </sql>
+
+    <select id="selectMonitoringEnvList" parameterType="MonitoringEnv" resultMap="MonitoringEnvResult">
+        <include refid="selectMonitoringEnvVo"/>
+        <where>  
+            <if test="companyId != null "> and company_id = #{companyId}</if>
+            <if test="monitorTime != null "> and monitor_time = #{monitorTime}</if>
+            <if test="location != null  and location != ''"> and location = #{location}</if>
+            <if test="temperature != null "> and temperature = #{temperature}</if>
+            <if test="humidity != null "> and humidity = #{humidity}</if>
+            <if test="delFlag != null  and delFlag != ''"> and del_flag = #{delFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectMonitoringEnvById" parameterType="Long" resultMap="MonitoringEnvResult">
+        <include refid="selectMonitoringEnvVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertMonitoringEnv" parameterType="MonitoringEnv" useGeneratedKeys="true" keyProperty="id">
+        insert into monitoring_env
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="companyId != null">company_id,</if>
+            <if test="monitorTime != null">monitor_time,</if>
+            <if test="location != null">location,</if>
+            <if test="temperature != null">temperature,</if>
+            <if test="humidity != null">humidity,</if>
+            <if test="delFlag != null">delFlag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="companyId != null">#{companyId},</if>
+            <if test="monitorTime != null">#{monitorTime},</if>
+            <if test="location != null">#{location},</if>
+            <if test="temperature != null">#{temperature},</if>
+            <if test="humidity != null">#{humidity},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMonitoringEnv" parameterType="MonitoringEnv">
+        update monitoring_env
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="companyId != null">company_id = #{companyId},</if>
+            <if test="monitorTime != null">monitor_time = #{monitorTime},</if>
+            <if test="location != null">location = #{location},</if>
+            <if test="temperature != null">temperature = #{temperature},</if>
+            <if test="humidity != null">humidity = #{humidity},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMonitoringEnvById" parameterType="Long">
+        delete from monitoring_env where id = #{id}
+    </delete>
+
+    <delete id="deleteMonitoringEnvByIds" parameterType="String">
+        delete from monitoring_env where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iteaj.business.mapper.MonitoringEnergyMapper">
+    
+    <resultMap type="MonitoringEnergy" id="MonitoringEnergyResult">
+        <result property="id"    column="id"    />
+        <result property="companyId"    column="company_id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="recordYear"    column="record_year"    />
+        <result property="recordMonth"    column="record_month"    />
+        <result property="recordDay"    column="record_day"    />
+        <result property="energyId"    column="energy_id"    />
+        <result property="energyUsage"    column="energy_usage"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectMonitoringEnergyVo">
+        select id, company_id, order_id, record_year, record_month, record_day, energy_id, energy_usage, del_flag, create_by, create_time, update_by, update_time, remark from monitoring_energy
+    </sql>
+    <sql id="selectMonitoringEnergyListVo">
+        SELECT
+            me.id,
+            me.company_id,
+            me.order_id,
+            me.record_year,
+            me.record_month,
+            me.record_day,
+            me.energy_id,
+            me.energy_usage,
+            me.del_flag,
+            me.create_by,
+            me.create_time,
+            me.update_by,
+            me.update_time,
+            me.remark ,
+            et.energy_name as energyName
+        FROM
+            monitoring_energy me
+            LEFT JOIN energy_type et ON me.energy_id = et.id
+    </sql>
+
+
+    <select id="selectMonitoringEnergyList" parameterType="MonitoringEnergy" resultMap="MonitoringEnergyResult">
+        <include refid="selectMonitoringEnergyListVo"/>
+        <where>  
+            <if test="companyId != null "> and me.company_id = #{companyId}</if>
+            <if test="orderId != null "> and me.order_id = #{orderId}</if>
+            <if test="recordYear != null "> and me.record_year = #{recordYear}</if>
+            <if test="recordMonth != null "> and me.record_month = #{recordMonth}</if>
+            <if test="recordDay != null "> and me.record_day = #{recordDay}</if>
+            <if test="energyId != null "> and me.energy_id = #{energyId}</if>
+            <if test="energyUsage != null "> and me.energy_usage = #{energyUsage}</if>
+        </where>
+    </select>
+    
+    <select id="selectMonitoringEnergyById" parameterType="Long" resultMap="MonitoringEnergyResult">
+        <include refid="selectMonitoringEnergyVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertMonitoringEnergy" parameterType="MonitoringEnergy" useGeneratedKeys="true" keyProperty="id">
+        insert into monitoring_energy
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="companyId != null">company_id,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="recordYear != null">record_year,</if>
+            <if test="recordMonth != null">record_month,</if>
+            <if test="recordDay != null">record_day,</if>
+            <if test="energyId != null">energy_id,</if>
+            <if test="energyUsage != null">energy_usage,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="companyId != null">#{companyId},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="recordYear != null">#{recordYear},</if>
+            <if test="recordMonth != null">#{recordMonth},</if>
+            <if test="recordDay != null">#{recordDay},</if>
+            <if test="energyId != null">#{energyId},</if>
+            <if test="energyUsage != null">#{energyUsage},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMonitoringEnergy" parameterType="MonitoringEnergy">
+        update monitoring_energy
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="companyId != null">company_id = #{companyId},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="recordYear != null">record_year = #{recordYear},</if>
+            <if test="recordMonth != null">record_month = #{recordMonth},</if>
+            <if test="recordDay != null">record_day = #{recordDay},</if>
+            <if test="energyId != null">energy_id = #{energyId},</if>
+            <if test="energyUsage != null">energy_usage = #{energyUsage},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMonitoringEnergyById" parameterType="Long">
+        delete from monitoring_energy where id = #{id}
+    </delete>
+
+    <delete id="deleteMonitoringEnergyByIds" parameterType="String">
+        delete from monitoring_energy where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="getEnergyDataByHours" resultType="com.iteaj.business.domain.MonitoringEnergy">
+        SELECT
+            et.id AS energyId,
+            et.energy_name AS energyName,
+            et.energy_unit AS energyUnit,
+            SUM(me.energy_usage) AS energyUsage
+        FROM
+            monitoring_energy me
+            left JOIN
+            energy_type et ON me.energy_id = et.id
+        WHERE
+            me.create_time >= DATE_SUB(NOW(), INTERVAL #{hour} HOUR)
+          AND me.company_id = #{companyId}
+          AND me.del_flag = '0'
+          AND et.del_flag = '0'
+        GROUP BY
+            et.id, et.energy_name, et.energy_unit
+    </select>
+
+    <select id="getDailyUsageByMonth" resultType="com.iteaj.business.domain.MonitoringEnergy">
+        SELECT
+            et.energy_name,
+            me.record_day AS record_day,
+            SUM(me.energy_usage) AS energy_usage
+        FROM
+            monitoring_energy me
+                JOIN
+            energy_type et ON me.energy_id = et.id
+        WHERE
+            me.record_year = #{recordYear}
+          AND me.record_month = #{recordMonth}
+          AND me.company_id = #{companyId}
+          AND me.del_flag = '0'
+          AND et.del_flag = '0'
+        GROUP BY
+            et.energy_name, me.record_year, me.record_month, me.record_day
+        ORDER BY
+            me.record_year, me.record_month, me.record_day
+    </select>
+
+    <select id="getTrendByEnergy" resultType="com.iteaj.business.domain.MonitoringEnergy">
+        SELECT
+            om.steel_spec AS steelSpec,
+            me.record_day AS record_day,
+            me.energy_usage
+        FROM
+            monitoring_energy me
+                JOIN
+            energy_type et ON me.energy_id = et.id
+                JOIN
+            order_main om ON me.order_code = om.order_code
+        WHERE
+            et.energy_name = #{energyName}
+          AND me.record_year = #{recordYear}
+          AND me.record_month = #{recordMonth}
+          AND me.company_id = #{companyId}
+          AND me.del_flag = '0'
+          AND et.del_flag = '0'
+          AND om.del_flag = '0'
+    </select>
+
+</mapper>
