@@ -1,18 +1,18 @@
 package com.iteaj.business.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.iteaj.business.domain.EnergyType;
 import com.iteaj.business.service.IEnergyTypeService;
-import com.iteaj.business.annotation.Log;
-import com.iteaj.business.core.controller.BaseController;
-import com.iteaj.business.core.domain.AjaxResult;
-import com.iteaj.business.core.page.TableDataInfo;
-import com.iteaj.business.enums.BusinessType;
-import com.iteaj.business.utils.poi.ExcelUtil;
+import com.iteaj.common.annotation.Anonymous;
+import com.iteaj.common.core.page.TableDataInfo;
+import com.iteaj.framework.BaseController;
+import com.iteaj.framework.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -28,71 +28,22 @@ public class EnergyTypeController extends BaseController
     @Autowired
     private IEnergyTypeService energyTypeService;
 
+    @Anonymous
+    @GetMapping("/hello")
+    public String hello() {
+        return "Hello111!";
+    }
+
     /**
      * 查询能源类型列表
      */
-    //@PreAuthorize("@ss.hasPermi('business:type:list')")
+
     @GetMapping("/list")
-    public TableDataInfo list(EnergyType energyType)
+    public Result<IPage<EnergyType>> list(Page<EnergyType> page, EnergyType energyType)
     {
-        startPage();
-        List<EnergyType> list = energyTypeService.selectEnergyTypeList(energyType);
-        return getDataTable(list);
+
+
+        return energyTypeService.selectEnergyTypeList(page,energyType);
     }
 
-    /**
-     * 导出能源类型列表
-     */
-    //@PreAuthorize("@ss.hasPermi('business:type:export')")
-    @Log(title = "能源类型", businessType = BusinessType.EXPORT)
-    @PostMapping("/export")
-    public void export(HttpServletResponse response, EnergyType energyType)
-    {
-        List<EnergyType> list = energyTypeService.selectEnergyTypeList(energyType);
-        ExcelUtil<EnergyType> util = new ExcelUtil<EnergyType>(EnergyType.class);
-        util.exportExcel(response, list, "能源类型数据");
-    }
-
-    /**
-     * 获取能源类型详细信息
-     */
-    //@PreAuthorize("@ss.hasPermi('business:type:query')")
-    @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id)
-    {
-        return success(energyTypeService.selectEnergyTypeById(id));
-    }
-
-    /**
-     * 新增能源类型
-     */
-    //@PreAuthorize("@ss.hasPermi('business:type:add')")
-    @Log(title = "能源类型", businessType = BusinessType.INSERT)
-    @PostMapping
-    public AjaxResult add(@RequestBody EnergyType energyType)
-    {
-        return toAjax(energyTypeService.insertEnergyType(energyType));
-    }
-
-    /**
-     * 修改能源类型
-     */
-    //@PreAuthorize("@ss.hasPermi('business:type:edit')")
-    @Log(title = "能源类型", businessType = BusinessType.UPDATE)
-    @PutMapping
-    public AjaxResult edit(@RequestBody EnergyType energyType)
-    {
-        return toAjax(energyTypeService.updateEnergyType(energyType));
-    }
-
-    /**
-     * 删除能源类型
-     */
-    //@PreAuthorize("@ss.hasPermi('business:type:remove')")
-    @Log(title = "能源类型", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable Long[] ids)
-    {
-        return toAjax(energyTypeService.deleteEnergyTypeByIds(ids));
-    }
 }

@@ -15,6 +15,7 @@ import com.iteaj.iboot.module.iot.consts.TypeAliasOptions;
 import com.iteaj.iboot.module.iot.dto.DebugTree;
 import com.iteaj.iboot.module.iot.dto.ProductTree;
 import com.iteaj.iboot.module.iot.service.IProductService;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 import com.iteaj.framework.security.CheckPermission;
 import com.iteaj.iboot.module.iot.entity.ProductType;
@@ -44,7 +45,7 @@ public class ProductTypeController extends BaseController {
     */
     @GetMapping("/view")
     @CheckPermission({"iot:productType:view"})
-    public Result<IPage<ProductType>> list(Page<ProductType> page, ProductType entity) {
+    public Result<IPage<ProductType>> list(Page<ProductType> page, @Param("entity")ProductType entity) {
         return this.productTypeService.pageOfDetail(page, entity);
     }
 

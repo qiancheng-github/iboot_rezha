@@ -163,6 +163,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.iteaj</groupId>
+            <version>${project.version}</version>
+            <artifactId>ruoyi-rezha</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

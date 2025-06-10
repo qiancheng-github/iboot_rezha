@@ -55,9 +55,12 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
 
-        <pagehelper.boot.version>1.4.7</pagehelper.boot.version>
+<!--        <pagehelper.boot.version>1.4.7</pagehelper.boot.version>-->
         <fastjson.version>2.0.43</fastjson.version>
         <bitwalker.version>1.21</bitwalker.version>
+        <commons.io.version>2.13.0</commons.io.version>
+        <jwt.version>0.9.1</jwt.version>
+        <poi.version>4.1.2</poi.version>
     </properties>
 
     <scm>
@@ -74,6 +77,13 @@
     </developers>
 
     <dependencies>
+        <!-- io常用工具类 -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons.io.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-jwt</artifactId>
@@ -93,17 +103,31 @@
         </dependency>
 
         <!-- pagehelper 分页插件 -->
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>${pagehelper.boot.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.github.pagehelper</groupId>-->
+<!--            <artifactId>pagehelper-spring-boot-starter</artifactId>-->
+<!--            <version>${pagehelper.boot.version}</version>-->
+<!--        </dependency>-->
 
         <!-- 阿里JSON解析器 -->
         <dependency>
             <groupId>com.alibaba.fastjson2</groupId>
             <artifactId>fastjson2</artifactId>
             <version>${fastjson.version}</version>
+        </dependency>
+
+        <!-- Token生成与解析-->
+<!--        <dependency>-->
+<!--            <groupId>io.jsonwebtoken</groupId>-->
+<!--            <artifactId>jjwt</artifactId>-->
+<!--            <version>${jwt.version}</version>-->
+<!--        </dependency>-->
+
+        <!-- excel工具 -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>${poi.version}</version>
         </dependency>
 
         <!--其他全局类库-->

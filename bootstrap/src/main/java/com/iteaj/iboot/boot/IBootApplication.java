@@ -2,6 +2,7 @@ package com.iteaj.iboot.boot;
 
 import com.iteaj.iboot.module.core.CoreAutoConfiguration;
 import com.iteaj.iboot.module.iot.IotAutoConfiguration;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,6 +24,8 @@ import org.springframework.context.annotation.ComponentScan;
         CoreAutoConfiguration.class, // 系统管理模块
 })
 @SpringBootApplication
+@ComponentScan({"com.iteaj.business"})
+@MapperScan("com.iteaj.business.mapper")
 public class IBootApplication {
 
     public static void main(String[] args) {

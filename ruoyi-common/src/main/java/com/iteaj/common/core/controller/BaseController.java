@@ -7,8 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+
 import com.iteaj.common.constant.HttpStatus;
 import com.iteaj.common.core.domain.AjaxResult;
 import com.iteaj.common.core.domain.model.LoginUser;
@@ -16,8 +15,6 @@ import com.iteaj.common.core.page.PageDomain;
 import com.iteaj.common.core.page.TableDataInfo;
 import com.iteaj.common.core.page.TableSupport;
 import com.iteaj.common.utils.DateUtils;
-import com.iteaj.common.utils.PageUtils;
-import com.iteaj.common.utils.SecurityUtils;
 import com.iteaj.common.utils.StringUtils;
 import com.iteaj.common.utils.sql.SqlUtil;
 
@@ -52,7 +49,7 @@ public class BaseController
      */
     protected void startPage()
     {
-        PageUtils.startPage();
+        //PageUtils.startPage();
     }
 
     /**
@@ -64,7 +61,7 @@ public class BaseController
         if (StringUtils.isNotEmpty(pageDomain.getOrderBy()))
         {
             String orderBy = SqlUtil.escapeOrderBySql(pageDomain.getOrderBy());
-            PageHelper.orderBy(orderBy);
+            //PageHelper.orderBy(orderBy);
         }
     }
 
@@ -73,7 +70,7 @@ public class BaseController
      */
     protected void clearPage()
     {
-        PageUtils.clearPage();
+        //PageUtils.clearPage();
     }
 
     /**
@@ -86,7 +83,7 @@ public class BaseController
         rspData.setCode(HttpStatus.SUCCESS);
         rspData.setMsg("查询成功");
         rspData.setRows(list);
-        rspData.setTotal(new PageInfo(list).getTotal());
+        //rspData.setTotal(new PageInfo(list).getTotal());
         return rspData;
     }
 
@@ -173,7 +170,7 @@ public class BaseController
      */
     public LoginUser getLoginUser()
     {
-        return SecurityUtils.getLoginUser();
+        return new LoginUser();
     }
 
     /**
@@ -195,8 +192,8 @@ public class BaseController
     /**
      * 获取登录用户名
      */
-    public String getUsername()
-    {
-        return getLoginUser().getUsername();
-    }
+//    public String getUsername()
+//    {
+//        return getLoginUser().getUsername();
+//    }
 }

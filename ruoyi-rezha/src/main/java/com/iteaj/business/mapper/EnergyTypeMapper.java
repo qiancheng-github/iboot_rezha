@@ -1,10 +1,13 @@
 package com.iteaj.business.mapper;
 
-import java.util.List;
-
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.iteaj.business.domain.EnergyType;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 能源类型Mapper接口
@@ -12,7 +15,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @author qiancheng
  * @date 2025-03-06
  */
-@Mapper
+
 public interface EnergyTypeMapper extends BaseMapper<EnergyType>
 {
     /**
@@ -29,7 +32,7 @@ public interface EnergyTypeMapper extends BaseMapper<EnergyType>
      * @param energyType 能源类型
      * @return 能源类型集合
      */
-    public List<EnergyType> selectEnergyTypeList(EnergyType energyType);
+    public IPage<EnergyType> selectEnergyTypeList(Page page, EnergyType energyType);
 
     /**
      * 新增能源类型
