@@ -13,11 +13,12 @@ import java.lang.reflect.Method;
  */
 @Component
 public class CommentUtil {
-    private static long companyId;
+    private static long companyId=101L;
 
     @Value("${company_id}")
     public void setCompanyId(long value) {
         companyId = value;
+        System.out.println("setCompanyId"+companyId);
     }
 
     /**
@@ -57,6 +58,5 @@ public class CommentUtil {
             throw new RuntimeException("设置companyId失败", e);
         }
     }
-
 
 }
