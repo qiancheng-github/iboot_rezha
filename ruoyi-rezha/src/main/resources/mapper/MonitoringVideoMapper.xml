@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iteaj.business.mapper.MonitoringVideoMapper">
+    
+    <resultMap type="com.iteaj.business.domain.MonitoringVideo" id="MonitoringVideoResult">
+        <result property="id"    column="id"    />
+        <result property="companyId"    column="company_id"    />
+        <result property="areaName"    column="area_name"    />
+        <result property="videoLink"    column="video_link"    />
+        <result property="thumbnailLink"    column="thumbnail_link"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectMonitoringVideoVo">
+        select id, company_id, area_name, video_link, thumbnail_link, del_flag, create_by, create_time, update_by, update_time, remark from monitoring_video
+    </sql>
+
+    <select id="selectMonitoringVideoList" parameterType="com.iteaj.business.domain.MonitoringVideo" resultMap="MonitoringVideoResult">
+        <include refid="selectMonitoringVideoVo"/>
+        <where>  
+            <if test="companyId != null "> and company_id = #{companyId}</if>
+            <if test="areaName != null  and areaName != ''"> and area_name like concat('%', #{areaName}, '%')</if>
+            <if test="videoLink != null  and videoLink != ''"> and video_link = #{videoLink}</if>
+            <if test="thumbnailLink != null  and thumbnailLink != ''"> and thumbnail_link = #{thumbnailLink}</if>
+        </where>
+    </select>
+    
+    <select id="selectMonitoringVideoById" parameterType="Long" resultMap="MonitoringVideoResult">
+        <include refid="selectMonitoringVideoVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertMonitoringVideo" parameterType="com.iteaj.business.domain.MonitoringVideo" useGeneratedKeys="true" keyProperty="id">
+        insert into monitoring_video
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="companyId != null">company_id,</if>
+            <if test="areaName != null and areaName != ''">area_name,</if>
+            <if test="videoLink != null">video_link,</if>
+            <if test="thumbnailLink != null">thumbnail_link,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="companyId != null">#{companyId},</if>
+            <if test="areaName != null and areaName != ''">#{areaName},</if>
+            <if test="videoLink != null">#{videoLink},</if>
+            <if test="thumbnailLink != null">#{thumbnailLink},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMonitoringVideo" parameterType="com.iteaj.business.domain.MonitoringVideo">
+        update monitoring_video
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="companyId != null">company_id = #{companyId},</if>
+            <if test="areaName != null and areaName != ''">area_name = #{areaName},</if>
+            <if test="videoLink != null">video_link = #{videoLink},</if>
+            <if test="thumbnailLink != null">thumbnail_link = #{thumbnailLink},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMonitoringVideoById" parameterType="Long">
+        delete from monitoring_video where id = #{id}
+    </delete>
+
+    <delete id="deleteMonitoringVideoByIds" parameterType="String">
+        delete from monitoring_video where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

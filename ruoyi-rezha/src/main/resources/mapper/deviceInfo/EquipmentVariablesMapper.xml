@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iteaj.business.mapper.EquipmentVariablesMapper">
+    
+    <resultMap type="com.iteaj.business.domain.EquipmentVariables" id="EquipmentVariablesResult">
+        <result property="variableId"    column="variable_id"    />
+        <result property="companyId"    column="company_id"    />
+        <result property="companyName"    column="company_name"    />
+        <result property="secondaryEquipmentTypeId"    column="secondary_equipment_type_id"    />
+        <result property="secondaryEquipmentTypeName"    column="secondary_equipment_type_name"    />
+        <result property="variableName"    column="variable_name"    />
+        <result property="variableEnName"    column="variable_en_name"    />
+        <result property="area"    column="area"    />
+        <result property="valueSource"    column="value_source"    />
+        <result property="variableValue"    column="variable_value"    />
+        <result property="description"    column="description"    />
+        <result property="minValue"    column="min_value"    />
+        <result property="maxValue"    column="max_value"    />
+        <result property="updateTimestamp"    column="update_timestamp"    />
+        <result property="accuracy"    column="accuracy"    />
+        <result property="unit"    column="unit"    />
+    </resultMap>
+
+    <sql id="selectEquipmentVariablesVo">
+        select variable_id, company_id, company_name, secondary_equipment_type_id, secondary_equipment_type_name, variable_name, variable_en_name, area, value_source, variable_value, description, min_value, max_value, update_timestamp, accuracy, unit from equipment_variables
+    </sql>
+
+    <select id="selectEquipmentVariablesList" parameterType="com.iteaj.business.domain.EquipmentVariables" resultMap="EquipmentVariablesResult">
+        <include refid="selectEquipmentVariablesVo"/>
+        <where>  
+            <if test="companyId != null "> and company_id = #{companyId}</if>
+            <if test="companyName != null "> and company_name like concat('%', #{companyName}, '%')</if>
+            <if test="secondaryEquipmentTypeId != null "> and secondary_equipment_type_id = #{secondaryEquipmentTypeId}</if>
+            <if test="secondaryEquipmentTypeName != null  and secondaryEquipmentTypeName != ''"> and secondary_equipment_type_name like concat('%', #{secondaryEquipmentTypeName}, '%')</if>
+            <if test="variableName != null  and variableName != ''"> and variable_name like concat('%', #{variableName}, '%')</if>
+            <if test="variableEnName != null  and variableEnName != ''"> and variable_en_name like concat('%', #{variableEnName}, '%')</if>
+            <if test="area != null  and area != ''"> and area = #{area}</if>
+            <if test="valueSource != null  and valueSource != ''"> and value_source = #{valueSource}</if>
+            <if test="variableValue != null  and variableValue != ''"> and variable_value = #{variableValue}</if>
+            <if test="description != null  and description != ''"> and description = #{description}</if>
+            <if test="minValue != null "> and min_value = #{minValue}</if>
+            <if test="maxValue != null "> and max_value = #{maxValue}</if>
+            <if test="updateTimestamp != null "> and update_timestamp = #{updateTimestamp}</if>
+            <if test="accuracy != null "> and accuracy = #{accuracy}</if>
+            <if test="unit != null  and unit != ''"> and unit = #{unit}</if>
+        </where>
+    </select>
+    
+    <select id="selectEquipmentVariablesByVariableId" parameterType="Long" resultMap="EquipmentVariablesResult">
+        <include refid="selectEquipmentVariablesVo"/>
+        where variable_id = #{variableId}
+    </select>
+
+    <insert id="insertEquipmentVariables" parameterType="com.iteaj.business.domain.EquipmentVariables" useGeneratedKeys="true" keyProperty="variableId">
+        insert into equipment_variables
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="companyId != null">company_id,</if>
+            <if test="companyName != null">company_name,</if>
+            <if test="mainEquipmentTypeId != null">main_equipment_type_id,</if>
+            <if test="mainEquipmentTypeName != null">main_equipment_type_name,</if>
+            <if test="secondaryEquipmentTypeId != null">secondary_equipment_type_id,</if>
+            <if test="secondaryEquipmentTypeName != null">secondary_equipment_type_name,</if>
+            <if test="variableName != null and variableName != ''">variable_name,</if>
+            <if test="variableEnName != null">variable_en_name,</if>
+            <if test="area != null">area,</if>
+            <if test="valueSource != null">value_source,</if>
+            <if test="variableValue != null">variable_value,</if>
+            <if test="description != null">description,</if>
+            <if test="minValue != null">min_value,</if>
+            <if test="maxValue != null">max_value,</if>
+            <if test="updateTimestamp != null">update_timestamp,</if>
+            <if test="accuracy != null">accuracy,</if>
+            <if test="unit != null">unit,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="companyId != null">#{companyId},</if>
+            <if test="companyName != null">#{companyName},</if>
+            <if test="mainEquipmentTypeId != null">#{mainEquipmentTypeId},</if>
+            <if test="mainEquipmentTypeName != null">#{mainEquipmentTypeName},</if>
+            <if test="secondaryEquipmentTypeId != null">#{secondaryEquipmentTypeId},</if>
+            <if test="secondaryEquipmentTypeName != null">#{secondaryEquipmentTypeName},</if>
+            <if test="variableName != null and variableName != ''">#{variableName},</if>
+            <if test="variableEnName != null">#{variableEnName},</if>
+            <if test="area != null">#{area},</if>
+            <if test="valueSource != null">#{valueSource},</if>
+            <if test="variableValue != null">#{variableValue},</if>
+            <if test="description != null">#{description},</if>
+            <if test="minValue != null">#{minValue},</if>
+            <if test="maxValue != null">#{maxValue},</if>
+            <if test="updateTimestamp != null">#{updateTimestamp},</if>
+            <if test="accuracy != null">#{accuracy},</if>
+            <if test="unit != null">#{unit},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEquipmentVariables" parameterType="com.iteaj.business.domain.EquipmentVariables">
+        update equipment_variables
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="companyId != null">company_id = #{companyId},</if>
+            <if test="companyName != null">company_name = #{companyName},</if>
+            <if test="mainEquipmentTypeId != null">main_equipment_type_id = #{mainEquipmentTypeId},</if>
+            <if test="mainEquipmentTypeName != null">main_equipment_type_name = #{mainEquipmentTypeName},</if>
+            <if test="secondaryEquipmentTypeId != null">secondary_equipment_type_id = #{secondaryEquipmentTypeId},</if>
+            <if test="secondaryEquipmentTypeName != null">secondary_equipment_type_name = #{secondaryEquipmentTypeName},</if>
+            <if test="variableName != null and variableName != ''">variable_name = #{variableName},</if>
+            <if test="variableEnName != null">variable_en_name = #{variableEnName},</if>
+            <if test="area != null">area = #{area},</if>
+            <if test="valueSource != null">value_source = #{valueSource},</if>
+            <if test="variableValue != null">variable_value = #{variableValue},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="minValue != null">min_value = #{minValue},</if>
+            <if test="maxValue != null">max_value = #{maxValue},</if>
+            <if test="updateTimestamp != null">update_timestamp = #{updateTimestamp},</if>
+            <if test="accuracy != null">accuracy = #{accuracy},</if>
+            <if test="unit != null">unit = #{unit},</if>
+        </trim>
+        where variable_id = #{variableId}
+    </update>
+
+    <delete id="deleteEquipmentVariablesByVariableId" parameterType="Long">
+        delete from equipment_variables where variable_id = #{variableId}
+    </delete>
+
+    <delete id="deleteEquipmentVariablesByVariableIds" parameterType="String">
+        delete from equipment_variables where variable_id in 
+        <foreach item="variableId" collection="array" open="(" separator="," close=")">
+            #{variableId}
+        </foreach>
+    </delete>
+
+    <select id="getStrpTempVo" resultType="com.iteaj.business.domain.EquipmentVariables">
+        select
+            variable_name,variable_value
+        from equipment_variables
+        where secondary_equipment_type_id = 7
+          AND company_id = #{companyId}
+          and (variable_name like "%入口%" or variable_name like "%出口%")
+          AND del_flag = '0'
+    </select>
+
+</mapper>

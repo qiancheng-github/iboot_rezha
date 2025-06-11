@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iteaj.business.mapper.EquipmentMaintRecMapper">
+    <resultMap type="com.iteaj.business.domain.EquipmentMaintRec" id="EquipmentMaintRecResult">
+        <result property="id" column="id"/>
+        <result property="companyId" column="company_id"/>
+        <result property="equipmentTypeId" column="equipment_type_id"/>
+        <result property="equipmentTypeName" column="equipment_type_name"/>
+        <result property="recordYear" column="record_year"/>
+        <result property="recordMonth" column="record_month"/>
+        <result property="recordDay" column="record_day"/>
+        <result property="maintenanceTime" column="maintenance_time"/>
+        <result property="repairReason" column="repair_reason"/>
+        <result property="maintenanceDuration" column="maintenance_duration"/>
+        <result property="maintenanceStaff" column="maintenance_staff"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="selectEquipmentMaintRecVo">
+        select id,
+               company_id,
+               equipment_type_id,
+               equipment_type_name,
+               record_year,
+               record_month,
+               record_day,
+               maintenance_time,
+               repair_reason,
+               maintenance_duration,
+               maintenance_staff,
+               del_flag,
+               create_by,
+               create_time,
+               update_by,
+               update_time,
+               remark
+        from equipment_maint_rec
+    </sql>
+
+    <select id="selectEquipmentMaintRecList" parameterType="com.iteaj.business.domain.EquipmentMaintRec" resultMap="EquipmentMaintRecResult">
+        <include refid="selectEquipmentMaintRecVo"/>
+        <where>
+            <if test="companyId != null ">
+                and company_id = #{companyId}
+            </if>
+            <if test="equipmentTypeId != null ">
+                and equipment_type_id = #{equipmentTypeId}
+            </if>
+            <if test="equipmentTypeName != null  and equipmentTypeName != ''">
+                and equipment_type_name like concat('%', #{equipmentTypeName}, '%')
+            </if>
+            <if test="recordYear != null ">
+                and record_year = #{recordYear}
+            </if>
+            <if test="recordMonth != null ">
+                and record_month = #{recordMonth}
+            </if>
+            <if test="recordDay != null ">
+                and record_day = #{recordDay}
+            </if>
+            <if test="maintenanceTime != null ">
+                and maintenance_time = #{maintenanceTime}
+            </if>
+            <if test="repairReason != null  and repairReason != ''">
+                and repair_reason = #{repairReason}
+            </if>
+            <if test="maintenanceDuration != null  and maintenanceDuration != ''">
+                and maintenance_duration = #{maintenanceDuration}
+            </if>
+            <if test="maintenanceStaff != null  and maintenanceStaff != ''">
+                and maintenance_staff = #{maintenanceStaff}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectEquipmentMaintRecByRecordId" parameterType="Long" resultMap="EquipmentMaintRecResult">
+        <include refid="selectEquipmentMaintRecVo"/>
+        where record_id = #{recordId}
+    </select>
+
+    <insert id="insertEquipmentMaintRec" parameterType="com.iteaj.business.domain.EquipmentMaintRec" useGeneratedKeys="true"
+            keyProperty="recordId">
+        insert into equipment_maint_rec
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="companyId != null">
+                company_id,
+            </if>
+            <if test="equipmentTypeId != null">
+                equipment_type_id,
+            </if>
+            <if test="equipmentTypeName != null and equipmentTypeName != ''">
+                equipment_type_name,
+            </if>
+            <if test="recordYear != null">
+                record_year,
+            </if>
+            <if test="recordMonth != null">
+                record_month,
+            </if>
+            <if test="recordDay != null">
+                record_day,
+            </if>
+            <if test="maintenanceTime != null">
+                maintenance_time,
+            </if>
+            <if test="repairReason != null">
+                repair_reason,
+            </if>
+            <if test="maintenanceDuration != null">
+                maintenance_duration,
+            </if>
+            <if test="maintenanceStaff != null">
+                maintenance_staff,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="companyId != null">
+                #{companyId},
+            </if>
+            <if test="equipmentTypeId != null">
+                #{equipmentTypeId},
+            </if>
+            <if test="equipmentTypeName != null and equipmentTypeName != ''">
+                #{equipmentTypeName},
+            </if>
+            <if test="recordYear != null">
+                #{recordYear},
+            </if>
+            <if test="recordMonth != null">
+                #{recordMonth},
+            </if>
+            <if test="recordDay != null">
+                #{recordDay},
+            </if>
+            <if test="maintenanceTime != null">
+                #{maintenanceTime},
+            </if>
+            <if test="repairReason != null">
+                #{repairReason},
+            </if>
+            <if test="maintenanceDuration != null">
+                #{maintenanceDuration},
+            </if>
+            <if test="maintenanceStaff != null">
+                #{maintenanceStaff},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag},
+            </if>
+            <if test="createBy != null">
+                #{createBy},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+            <if test="remark != null">
+                #{remark},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateEquipmentMaintRec" parameterType="com.iteaj.business.domain.EquipmentMaintRec">
+        update equipment_maint_rec
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="companyId != null">
+                company_id = #{companyId},
+            </if>
+            <if test="equipmentTypeId != null">
+                equipment_type_id = #{equipmentTypeId},
+            </if>
+            <if test="equipmentTypeName != null and equipmentTypeName != ''">
+                equipment_type_name = #{equipmentTypeName},
+            </if>
+            <if test="recordYear != null">
+                record_year = #{recordYear},
+            </if>
+            <if test="recordMonth != null">
+                record_month = #{recordMonth},
+            </if>
+            <if test="recordDay != null">
+                record_day = #{recordDay},
+            </if>
+            <if test="maintenanceTime != null">
+                maintenance_time = #{maintenanceTime},
+            </if>
+            <if test="repairReason != null">
+                repair_reason = #{repairReason},
+            </if>
+            <if test="maintenanceDuration != null">
+                maintenance_duration = #{maintenanceDuration},
+            </if>
+            <if test="maintenanceStaff != null">
+                maintenance_staff = #{maintenanceStaff},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEquipmentMaintRecByRecordId" parameterType="Long">
+        delete
+        from equipment_maint_rec
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteEquipmentMaintRecByRecordIds" parameterType="String">
+        delete from equipment_maint_rec where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="getMaintStatsByYear" resultType="com.iteaj.business.vo.EquipmentMainStatsVo">
+        SELECT
+            SUM(CASE WHEN repair_reason = '设备例检' THEN 1 ELSE 0 END) AS inspection_count,
+            SUM(CASE WHEN repair_reason = '故障暂停' THEN 1 ELSE 0 END) AS faultPause_count
+        FROM
+            equipment_maint_rec
+        WHERE
+            record_year = #{recordYear}
+          AND del_flag = '0'
+          AND company_id = #{companyId}
+    </select>
+</mapper>

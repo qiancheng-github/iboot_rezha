@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iteaj.business.mapper.MonitoringEquipAlarmMapper">
+    
+    <resultMap type="com.iteaj.business.domain.MonitoringEquipAlarm" id="MonitoringEquipAlarmResult">
+        <result property="id"    column="id"    />
+        <result property="companyId"    column="company_id"    />
+        <result property="equipmentTypeId"    column="equipment_type_id"    />
+        <result property="failureName"    column="failure_name"    />
+        <result property="alarmType"    column="alarm_type"    />
+        <result property="dangerLevel"    column="danger_level"    />
+        <result property="location"    column="location"    />
+        <result property="alarmYear"    column="alarm_year"    />
+        <result property="alarmMonth"    column="alarm_month"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="responseMeasures"    column="response_measures"    />
+        <result property="eqpWarnCont"    column="eqp_warn_cont"    />
+        <result property="warMainCat"    column="war_main_cat"    />
+        <result property="monThumb"    column="mon_thumb"    />
+    </resultMap>
+
+    <sql id="selectMonitoringEquipAlarmVo">
+        select id, company_id, equipment_type_id, failure_name, alarm_type, danger_level, location, alarm_year, alarm_month, del_flag, create_by, create_time, update_by, update_time, remark, response_measures, eqp_warn_cont, war_main_cat, mon_thumb from monitoring_equip_alarm
+    </sql>
+
+    <select id="selectMonitoringEquipAlarmList" parameterType="com.iteaj.business.domain.MonitoringEquipAlarm" resultMap="MonitoringEquipAlarmResult">
+        <include refid="selectMonitoringEquipAlarmVo"/>
+        <where>  
+            <if test="companyId != null "> and company_id = #{companyId}</if>
+            <if test="equipmentTypeId != null "> and equipment_type_id = #{equipmentTypeId}</if>
+            <if test="failureName != null  and failureName != ''"> and failure_name like concat('%', #{failureName}, '%')</if>
+            <if test="alarmType != null  and alarmType != ''"> and alarm_type = #{alarmType}</if>
+            <if test="dangerLevel != null  and dangerLevel != ''"> and danger_level = #{dangerLevel}</if>
+            <if test="location != null  and location != ''"> and location = #{location}</if>
+            <if test="alarmYear != null "> and alarm_year = #{alarmYear}</if>
+            <if test="alarmMonth != null "> and alarm_month = #{alarmMonth}</if>
+            <if test="responseMeasures != null  and responseMeasures != ''"> and response_measures = #{responseMeasures}</if>
+            <if test="eqpWarnCont != null  and eqpWarnCont != ''"> and eqp_warn_cont = #{eqpWarnCont}</if>
+            <if test="warMainCat != null  and warMainCat != ''"> and war_main_cat = #{warMainCat}</if>
+            <if test="monThumb != null  and monThumb != ''"> and mon_thumb = #{monThumb}</if>
+        </where>
+    </select>
+    
+    <select id="selectMonitoringEquipAlarmById" parameterType="Long" resultMap="MonitoringEquipAlarmResult">
+        <include refid="selectMonitoringEquipAlarmVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertMonitoringEquipAlarm" parameterType="com.iteaj.business.domain.MonitoringEquipAlarm" useGeneratedKeys="true" keyProperty="id">
+        insert into monitoring_equip_alarm
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="companyId != null">company_id,</if>
+            <if test="equipmentTypeId != null">equipment_type_id,</if>
+            <if test="failureName != null and failureName != ''">failure_name,</if>
+            <if test="alarmType != null and alarmType != ''">alarm_type,</if>
+            <if test="dangerLevel != null">danger_level,</if>
+            <if test="location != null">location,</if>
+            <if test="alarmYear != null">alarm_year,</if>
+            <if test="alarmMonth != null">alarm_month,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="responseMeasures != null">response_measures,</if>
+            <if test="eqpWarnCont != null">eqp_warn_cont,</if>
+            <if test="warMainCat != null and warMainCat != ''">war_main_cat,</if>
+            <if test="monThumb != null">mon_thumb,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="companyId != null">#{companyId},</if>
+            <if test="equipmentTypeId != null">#{equipmentTypeId},</if>
+            <if test="failureName != null and failureName != ''">#{failureName},</if>
+            <if test="alarmType != null and alarmType != ''">#{alarmType},</if>
+            <if test="dangerLevel != null">#{dangerLevel},</if>
+            <if test="location != null">#{location},</if>
+            <if test="alarmYear != null">#{alarmYear},</if>
+            <if test="alarmMonth != null">#{alarmMonth},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="responseMeasures != null">#{responseMeasures},</if>
+            <if test="eqpWarnCont != null">#{eqpWarnCont},</if>
+            <if test="warMainCat != null and warMainCat != ''">#{warMainCat},</if>
+            <if test="monThumb != null">#{monThumb},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMonitoringEquipAlarm" parameterType="com.iteaj.business.domain.MonitoringEquipAlarm">
+        update monitoring_equip_alarm
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="companyId != null">company_id = #{companyId},</if>
+            <if test="equipmentTypeId != null">equipment_type_id = #{equipmentTypeId},</if>
+            <if test="failureName != null and failureName != ''">failure_name = #{failureName},</if>
+            <if test="alarmType != null and alarmType != ''">alarm_type = #{alarmType},</if>
+            <if test="dangerLevel != null">danger_level = #{dangerLevel},</if>
+            <if test="location != null">location = #{location},</if>
+            <if test="alarmYear != null">alarm_year = #{alarmYear},</if>
+            <if test="alarmMonth != null">alarm_month = #{alarmMonth},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="responseMeasures != null">response_measures = #{responseMeasures},</if>
+            <if test="eqpWarnCont != null">eqp_warn_cont = #{eqpWarnCont},</if>
+            <if test="warMainCat != null and warMainCat != ''">war_main_cat = #{warMainCat},</if>
+            <if test="monThumb != null">mon_thumb = #{monThumb},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMonitoringEquipAlarmById" parameterType="Long">
+        delete from monitoring_equip_alarm where id = #{id}
+    </delete>
+
+    <delete id="deleteMonitoringEquipAlarmByIds" parameterType="String">
+        delete from monitoring_equip_alarm where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="getAlarmStats" resultType="com.iteaj.business.vo.AlarmStatsVO">
+        SELECT
+            COUNT(1) AS total, -- 统计符合条件的预警记录总数，别名为total
+            SUM(CASE WHEN danger_level = '1' THEN 1 ELSE 0 END) AS urgentCount, -- 统计危险等级为'1'（紧急）的预警数量，别名为urgentCount
+            SUM(CASE WHEN danger_level = '2' THEN 1 ELSE 0 END) AS mediumCount, -- 统计危险等级为'2'（中等）的预警数量，别名为mediumCount
+            SUM(CASE WHEN danger_level = '3' THEN 1 ELSE 0 END) AS generalCount -- 统计危险等级为'3'（一般）的预警数量，别名为generalCount
+        FROM
+            monitoring_equip_alarm -- 从设备监控预警表中查询数据
+        WHERE
+            del_flag = '0'
+        <if test="alarmYear != null"> and alarm_year = #{alarmYear}</if>
+        <if test="warMainCat != null and warMainCat != ''"> and war_main_cat = #{warMainCat}</if>
+        <if test="companyId != null"> and company_id = #{companyId}</if>
+        <if test="equipmentTypeId != null"> and equipment_type_id = #{equipmentTypeId}</if>
+    </select>
+
+</mapper>

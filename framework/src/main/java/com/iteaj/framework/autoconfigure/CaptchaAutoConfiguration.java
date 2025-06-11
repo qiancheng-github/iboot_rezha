@@ -91,7 +91,7 @@ public class CaptchaAutoConfiguration {
     @Bean
     @Order(20)
     public OrderFilterChainDefinition captchaFilterChainDefinition() {
-        return new OrderFilterChainDefinition().addAnon("/valid/**", "/business/type/**");
+        return new OrderFilterChainDefinition().addAnon("/valid/**", "/business/**");
     }
 
     /**
