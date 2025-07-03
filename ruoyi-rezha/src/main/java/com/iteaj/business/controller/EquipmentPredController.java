@@ -32,11 +32,11 @@ public class EquipmentPredController extends BaseController
      */
     
     @GetMapping("/list")
-    public TableDataInfo list(EquipmentPred equipmentPred)
+    public AjaxResult list(EquipmentPred equipmentPred)
     {
         startPage();
         List<EquipmentPred> list = equipmentPredService.selectEquipmentPredList(equipmentPred);
-        return getDataTable(list);
+        return success(list);
     }
 
     /**

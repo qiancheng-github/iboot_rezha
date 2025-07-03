@@ -34,11 +34,11 @@ public class MonitoringEquipAlarmController extends BaseController
      */
     @Anonymous
     @GetMapping("/list")
-    public TableDataInfo list(MonitoringEquipAlarm monitoringEquipAlarm)
+    public AjaxResult list(MonitoringEquipAlarm monitoringEquipAlarm)
     {
         startPage();
         List<MonitoringEquipAlarm> list = monitoringEquipAlarmService.selectMonitoringEquipAlarmList(monitoringEquipAlarm);
-        return getDataTable(list);
+        return success(list);
     }
 
     /**

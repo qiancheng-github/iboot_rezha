@@ -19,10 +19,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <sql id="selectFeedbackListVo">
         SELECT f.id,
-               d.dict_label AS feedback_type,
+               d.label AS feedback_type,
                f.supplementary_info
         FROM feedback f
-        JOIN sys_dict_data d ON f.feedback_type = d.dict_value
+        JOIN sys_dict_data d ON f.feedback_type = d.value
     </sql>
 
     <sql id="selectFeedbackVo">
@@ -32,7 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectFeedbackList" parameterType="com.iteaj.business.domain.Feedback" resultMap="FeedbackResult">
         <include refid="selectFeedbackListVo"/>
         <where>
-            d.dict_type = 'feed_back_type' and f.del_flag='0'
+            d.type = 'feed_back_type' and f.del_flag='0'
             <if test="companyId != null  and companyId != ''"> and company_id = #{companyId}</if>
             <if test="feedbackType != null  and feedbackType != ''"> and feedback_type = #{feedbackType}</if>
             <if test="supplementaryInfo != null  and supplementaryInfo != ''"> and supplementary_info = #{supplementaryInfo}</if>

@@ -33,11 +33,11 @@ public class OrderDetailController extends BaseController
      */
     
     @GetMapping("/list")
-    public TableDataInfo list(OrderDetail orderDetail)
+    public AjaxResult list(OrderDetail orderDetail)
     {
         startPage();
         List<OrderDetail> list = orderDetailService.selectOrderDetailList(orderDetail);
-        return getDataTable(list);
+        return success(list);
     }
 
     /**

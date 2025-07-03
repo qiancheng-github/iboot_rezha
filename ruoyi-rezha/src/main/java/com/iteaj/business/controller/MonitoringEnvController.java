@@ -34,11 +34,11 @@ public class MonitoringEnvController extends BaseController
      */
     @Anonymous
     @GetMapping("/list")
-    public TableDataInfo list(MonitoringEnv monitoringEnv)
+    public AjaxResult list(MonitoringEnv monitoringEnv)
     {
         startPage();
         List<MonitoringEnv> list = monitoringEnvService.selectMonitoringEnvList(monitoringEnv);
-        return getDataTable(list);
+        return success(list);
     }
 
     /**

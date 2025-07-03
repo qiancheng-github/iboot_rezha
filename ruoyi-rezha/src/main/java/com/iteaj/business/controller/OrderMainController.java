@@ -34,11 +34,11 @@ public class OrderMainController extends BaseController
      */
     @Anonymous
     @GetMapping("/list")
-    public TableDataInfo list(OrderMain orderMain)
+    public AjaxResult list(OrderMain orderMain)
     {
         startPage();
         List<OrderMain> list = orderMainService.selectOrderMainList(orderMain);
-        return getDataTable(list);
+        return success(list);
     }
 
     /**

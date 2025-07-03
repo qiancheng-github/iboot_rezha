@@ -3,12 +3,16 @@ package com.iteaj.business.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.iteaj.business.domain.EnergyType;
+import com.iteaj.business.domain.Feedback;
 import com.iteaj.business.service.IEnergyTypeService;
 import com.iteaj.common.core.controller.BaseController;
 import com.iteaj.common.core.domain.AjaxResult;
+import com.iteaj.common.utils.CommentUtil;
 import com.iteaj.framework.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 能源类型Controller
@@ -35,8 +39,8 @@ public class EnergyTypeController extends BaseController
     /**
      * 获取能源类型详细信息
      */
-    @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id)
+    @GetMapping(value = "/edit")
+    public AjaxResult getInfo(Long id)
     {
         return success(energyTypeService.selectEnergyTypeById(id));
     }
@@ -62,10 +66,22 @@ public class EnergyTypeController extends BaseController
     /**
      * 删除能源类型
      */
-    @DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable Long[] ids)
+    @PostMapping("/del")
+    public AjaxResult remove(@RequestBody List<Long> idList)
     {
+        Long[] ids = idList.toArray(new Long[0]);
         return toAjax(energyTypeService.deleteEnergyTypeByIds(ids));
+    }
+
+    /**
+     * 新增或者更新记录
+     * @param energyType
+     */
+    @PostMapping("/saveOrUpdate")
+    public AjaxResult saveOrUpdate(@RequestBody EnergyType energyType) {
+        //设置工厂id
+        CommentUtil.resetCompanyId(energyType);
+        return toAjax(this.energyTypeService.saveOrUpdate(energyType));
     }
 
 }

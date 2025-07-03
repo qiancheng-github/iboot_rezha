@@ -34,11 +34,11 @@ public class MonitoringEnergyController extends BaseController
      */
     
     @GetMapping("/list")
-    public TableDataInfo list(MonitoringEnergy monitoringEnergy)
+    public AjaxResult list(MonitoringEnergy monitoringEnergy)
     {
         startPage();
         List<MonitoringEnergy> list = monitoringEnergyService.selectMonitoringEnergyList(monitoringEnergy);
-        return getDataTable(list);
+        return success(list);
     }
 
     /**

@@ -8,7 +8,12 @@ import com.iteaj.common.core.controller.BaseController;
 import com.iteaj.common.core.domain.AjaxResult;
 import com.iteaj.common.core.page.TableDataInfo;
 import com.iteaj.common.enums.BusinessType;
+import com.iteaj.common.utils.CommentUtil;
 import com.iteaj.common.utils.poi.ExcelUtil;
+import com.iteaj.framework.logger.Logger;
+import com.iteaj.framework.result.Result;
+import com.iteaj.framework.security.CheckPermission;
+import com.iteaj.framework.security.Logical;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
@@ -34,11 +39,11 @@ public class FeedbackController extends BaseController
      */
     @Anonymous
     @GetMapping("/list")
-    public TableDataInfo list(Feedback feedback)
+    public AjaxResult list(Feedback feedback)
     {
         startPage();
         List<Feedback> list = feedbackService.selectFeedbackList(feedback);
-        return getDataTable(list);
+        return success(list);
     }
 
     /**
@@ -58,11 +63,21 @@ public class FeedbackController extends BaseController
      * 获取意见反馈详细信息
      */
     
-    @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") long id)
+    @GetMapping(value = "/edit")
+    public AjaxResult getInfo(long id)
     {
         return success(feedbackService.selectFeedbackById(id));
     }
+
+    /**
+     * 获取编辑记录
+     * @param id 记录id
+     */
+//    @GetMapping("/edit")
+//    @CheckPermission({"core:notify:edit"})
+//    public Result<Notify> getById(Long id) {
+//        return this.notifyService.getById(id);
+//    }
 
     /**
      * 新增意见反馈
@@ -89,11 +104,23 @@ public class FeedbackController extends BaseController
     /**
      * 删除意见反馈
      */
-    
+
     @Log(title = "意见反馈", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable("ids") Long[] ids)
+	@PostMapping("/del")
+    public AjaxResult remove(@RequestBody List<Long> idList)
     {
+        Long[] ids = idList.toArray(new Long[0]);
         return toAjax(feedbackService.deleteFeedbackByIds(ids));
+    }
+
+    /**
+     * 新增或者更新记录
+     * @param feedback
+     */
+    @PostMapping("/saveOrUpdate")
+    public AjaxResult saveOrUpdate(@RequestBody Feedback feedback) {
+        //设置工厂id
+        CommentUtil.resetCompanyId(feedback);
+        return toAjax(this.feedbackService.saveOrUpdate(feedback));
     }
 }

@@ -35,11 +35,14 @@ public class EquipmentVariablesController extends BaseController
      */
     
     @GetMapping("/list")
-    public TableDataInfo list(EquipmentVariables equipmentVariables)
+    public AjaxResult list(EquipmentVariables equipmentVariables)
     {
-        startPage();
-        List<EquipmentVariables> list = equipmentVariablesService.selectEquipmentVariablesList(equipmentVariables);
-        return getDataTable(list);
+        //startPage();
+        return success(equipmentVariablesService.selectEquipmentVariablesList(equipmentVariables));
+        //List<EquipmentVariables> list = equipmentVariablesService.selectEquipmentVariablesList(equipmentVariables);
+        //TableDataInfo dataTable = getDataTable(list);
+        //dataTable.setTotal(list.size());
+        //return dataTable;
     }
 
     /**

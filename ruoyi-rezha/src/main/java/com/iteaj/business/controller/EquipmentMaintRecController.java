@@ -30,11 +30,11 @@ public class EquipmentMaintRecController extends BaseController
      * 查询设备维护记录列表
      */
     @GetMapping("/list")
-    public TableDataInfo list(EquipmentMaintRec equipmentMaintRec)
+    public AjaxResult list(EquipmentMaintRec equipmentMaintRec)
     {
         startPage();
         List<EquipmentMaintRec> list = equipmentMaintRecService.selectEquipmentMaintRecList(equipmentMaintRec);
-        return getDataTable(list);
+        return success(list);
     }
 
     /**

@@ -23,7 +23,7 @@ import java.util.List;
  * @date 2025-02-27
  */
 @RestController
-@RequestMapping("/deviceInfo/types")
+@RequestMapping("/business/types")
 public class EquipmentTypesController extends BaseController
 {
     @Autowired

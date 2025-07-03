@@ -34,11 +34,11 @@ public class MonitoringVideoController extends BaseController
      */
     @Anonymous
     @GetMapping("/list")
-    public TableDataInfo list(MonitoringVideo monitoringVideo)
+    public AjaxResult list(MonitoringVideo monitoringVideo)
     {
         startPage();
         List<MonitoringVideo> list = monitoringVideoService.selectMonitoringVideoList(monitoringVideo);
-        return getDataTable(list);
+        return success(list);
     }
 
     /**
